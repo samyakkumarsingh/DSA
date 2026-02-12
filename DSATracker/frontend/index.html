@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>📊 DSA Tracker</h1>
+            <p>Track your Data Structures &amp; Algorithms progress</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- Stats Dashboard -->
+        <section class="stats-section">
+            <div class="stat-card total">
+                <h3>Total</h3>
+                <span id="stat-total">0</span>
+            </div>
+            <div class="stat-card solved">
+                <h3>Solved</h3>
+                <span id="stat-solved">0</span>
+            </div>
+            <div class="stat-card attempted">
+                <h3>Attempted</h3>
+                <span id="stat-attempted">0</span>
+            </div>
+            <div class="stat-card pending">
+                <h3>Pending</h3>
+                <span id="stat-pending">0</span>
+            </div>
+        </section>
+
+        <!-- Difficulty Stats -->
+        <section class="difficulty-section">
+            <div class="diff-card easy">
+                <span class="diff-label">Easy</span>
+                <span id="stat-easy" class="diff-count">0</span>
+            </div>
+            <div class="diff-card medium">
+                <span class="diff-label">Medium</span>
+                <span id="stat-medium" class="diff-count">0</span>
+            </div>
+            <div class="diff-card hard">
+                <span class="diff-label">Hard</span>
+                <span id="stat-hard" class="diff-count">0</span>
+            </div>
+        </section>
+
+        <!-- Add Problem Form -->
+        <section class="form-section">
+            <h2>Add New Problem</h2>
+            <form id="add-problem-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="title">Problem Title *</label>
+                        <input type="text" id="title" name="title" required placeholder="e.g., Two Sum">
+                    </div>
+                    <div class="form-group">
+                        <label for="topic">Topic *</label>
+                        <select id="topic" name="topic" required>
+                            <option value="">Select Topic</option>
+                            <option value="Array">Array</option>
+                            <option value="String">String</option>
+                            <option value="Linked List">Linked List</option>
+                            <option value="Stack">Stack</option>
+                            <option value="Queue">Queue</option>
+                            <option value="Tree">Tree</option>
+                            <option value="Graph">Graph</option>
+                            <option value="Dynamic Programming">Dynamic Programming</option>
+                            <option value="Sorting">Sorting</option>
+                            <option value="Searching">Searching</option>
+                            <option value="Hashing">Hashing</option>
+                            <option value="Recursion">Recursion</option>
+                            <option value="Backtracking">Backtracking</option>
+                            <option value="Greedy">Greedy</option>
+                            <option value="Bit Manipulation">Bit Manipulation</option>
+                            <option value="Math">Math</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="difficulty">Difficulty *</label>
+                        <select id="difficulty" name="difficulty" required>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" name="status" required>
+                            <option value="Pending">Pending</option>
+                            <option value="Attempted">Attempted</option>
+                            <option value="Solved">Solved</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="link">Problem Link</label>
+                        <input type="url" id="link" name="link" placeholder="https://leetcode.com/problems/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <input type="text" id="notes" name="notes" placeholder="Any notes or approach used">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Problem</button>
+            </form>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <h2>Problems List</h2>
+            <div class="filters">
+                <select id="filter-topic">
+                    <option value="">All Topics</option>
+                    <option value="Array">Array</option>
+                    <option value="String">String</option>
+                    <option value="Linked List">Linked List</option>
+                    <option value="Stack">Stack</option>
+                    <option value="Queue">Queue</option>
+                    <option value="Tree">Tree</option>
+                    <option value="Graph">Graph</option>
+                    <option value="Dynamic Programming">Dynamic Programming</option>
+                    <option value="Sorting">Sorting</option>
+                    <option value="Searching">Searching</option>
+                    <option value="Hashing">Hashing</option>
+                    <option value="Recursion">Recursion</option>
+                    <option value="Backtracking">Backtracking</option>
+                    <option value="Greedy">Greedy</option>
+                    <option value="Bit Manipulation">Bit Manipulation</option>
+                    <option value="Math">Math</option>
+                    <option value="Other">Other</option>
+                </select>
+                <select id="filter-difficulty">
+                    <option value="">All Difficulties</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+                <select id="filter-status">
+                    <option value="">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Attempted">Attempted</option>
+                    <option value="Solved">Solved</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Problems Table -->
+        <section class="table-section">
+            <table id="problems-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Topic</th>
+                        <th>Difficulty</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="problems-body">
+                    <tr class="empty-row">
+                        <td colspan="7">No problems added yet. Start tracking your DSA journey!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>DSA Tracker &mdash; Built with Java &amp; Web Technologies</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
