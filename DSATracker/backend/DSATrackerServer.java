@@ -2,6 +2,7 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.*;
 import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -100,7 +101,10 @@ public class DSATrackerServer {
                 data.get("difficulty"), data.get("status"),
                 data.get("notes"), data.get("link"));
         if (updated) {
-            sendResponse(exchange, 200, store.findById(id).get().toJson());
+            store.findById(id).ifPresentOrElse(
+                p -> { try { sendResponse(exchange, 200, p.toJson()); } catch (IOException e) { throw new UncheckedIOException(e); } },
+                () -> { try { sendResponse(exchange, 404, "{\"error\":\"Problem not found\"}"); } catch (IOException e) { throw new UncheckedIOException(e); } }
+            );
         } else {
             sendResponse(exchange, 404, "{\"error\":\"Problem not found\"}");
         }
@@ -159,7 +163,7 @@ public class DSATrackerServer {
     private static void sendResponse(HttpExchange exchange, int statusCode, String body)
             throws IOException {
         exchange.getResponseHeaders().set("Content-Type", "application/json");
-        byte[] bytes = body.getBytes("UTF-8");
+        byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
         exchange.sendResponseHeaders(statusCode, bytes.length);
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(bytes);
@@ -192,7 +196,7 @@ public class DSATrackerServer {
         Map<String, String> result = new HashMap<>();
         String body;
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(exchange.getRequestBody(), "UTF-8"))) {
+                new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8))) {
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
